@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>La Goleta - Carta de Cócteles</title>
+
+  <!-- FontAwesome para iconos -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <!-- Fuentes -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* Reset básico */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #a7d8de, #f0f7f9);
+      color: #2c3e50;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      padding: 20px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      animation: fadeInDown 1s ease forwards;
+      opacity: 0;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 3rem;
+      color: #17668a;
+      letter-spacing: 8px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    header p {
+      font-style: italic;
+      font-size: 1.4rem;
+      color: #497f93;
+      letter-spacing: 0.8px;
+    }
+
+    /* Navegación */
+    nav {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+      animation-delay: 0.5s;
+    }
+    nav a {
+      display: inline-block;
+      margin: 0 18px;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: #17668a;
+      padding-bottom: 5px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    nav a i {
+      margin-right: 6px;
+      color: #1e9eca;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #1e9eca;
+      transition: width 0.3s ease;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: #1e9eca;
+    }
+    nav a:hover::after,
+    nav a:focus::after {
+      width: 100%;
+    }
+
+    /* Secciones */
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2.2rem;
+      color: #17668a;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2 i {
+      color: #1e9eca;
+      font-size: 2.4rem;
+    }
+
+    .section-anchor {
+      position: relative;
+      top: -80px; /* para que al hacer scroll quede bien visible debajo del nav */
+      visibility: hidden;
+    }
+
+    /* Grid para menú */
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .col-md-6 {
+      flex: 1 1 45%;
+      min-width: 280px;
+    }
+    .col-md-4 {
+      flex: 1 1 28%;
+      min-width: 200px;
+    }
+
+    /* Items */
+    .menu-item {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 14px;
+      padding: 18px 22px;
+      box-shadow: 0 8px 20px rgba(23, 102, 138, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .menu-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 35px rgba(23, 102, 138, 0.3);
+      background-color: #e1f0f7;
+    }
+
+    .menu-item .d-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #124a5e;
+      margin-bottom: 6px;
+    }
+    .description {
+      font-weight: 400;
+      font-size: 1rem;
+      color: #3e5e70;
+      font-style: normal;
+      line-height: 1.3;
+    }
+
+    /* Subsección Destilados */
+    h5.text-primary {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #17668a;
+      margin-top: 40px;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+
+    /* Precio */
+    .price {
+      font-weight: 700;
+      color: #0f3b4a;
+      font-size: 1.2rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #497f93;
+      font-style: italic;
+    }
+    footer a {
+      color: #1e9eca;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Animaciones fadeIn */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    header {
+      animation: fadeInDown 1s ease forwards;
+    }
+    nav {
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.5s;
+    }
+    section, h5.text-primary {
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+    section:nth-of-type(1) {
+      animation-delay: 1s;
+    }
+    section:nth-of-type(2) {
+      animation-delay: 1.3s;
+    }
+    section:nth-of-type(3) {
+      animation-delay: 1.6s;
+    }
+    section:nth-of-type(4) {
+      animation-delay: 1.9s;
+    }
+    h5.text-primary {
+      animation-delay: 1.5s;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav a {
+        margin: 0 12px;
+        font-size: 1rem;
+      }
+      header h1 {
+        font-size: 2.4rem;
+        letter-spacing: 4px;
+      }
+      header p {
+        font-size: 1.1rem;
+      }
+      h2 {
+        font-size: 1.6rem;
+        gap: 6px;
+      }
+      h2 i {
+        font-size: 1.8rem;
+      }
+      .row {
+        flex-direction: column;
+      }
+      .col-md-6,
+      .col-md-4 {
+        flex: 1 1 100%;
+        min-width: auto;
+      }
+      .menu-item .d-flex {
+        font-size: 1.1rem;
+      }
+      .description {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>LA GOLETA</h1>
+    <p>Relájate y disfruta, tu momento de paz comienza aquí.</p>
+  </header>
+
+ <nav>
+  <a class="nav-link nav-link-custom" href="#cocteles" tabindex="1">
+    <i class="fas fa-cocktail me-1"></i> Cócteles
+  </a>
+  <a class="nav-link nav-link-custom" href="#destilados" tabindex="2">
+    <i class="fas fa-wine-bottle me-1"></i> Destilados
+  </a>
+  <a class="nav-link nav-link-custom" href="#copas" tabindex="3">
+    <i class="fas fa-glass-martini-alt me-1"></i> Copas
+  </a>
+  <a class="nav-link nav-link-custom" href="#chupitos" tabindex="4">
+    <i class="fas fa-glass-whiskey me-1"></i> Chupitos
+  </a>
+  <a class="nav-link nav-link-custom" href="#otros" tabindex="5">
+    <i class="fas fa-ellipsis-h me-1"></i> Otros
+  </a>
+</nav>
+
+  <main>
+    <!-- Sección Cócteles -->
+<div class="section-anchor" id="cocteles"></div>
+<section>
+  <h2><i class="fas fa-cocktail me-2"></i>Cócteles</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Caipirinha</span>
+          <span class="price">12,00 €</span>
+        </div>
+        <div class="description">Cachaça, limón, azúcar, hielo</div>
+      </div>
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Mojito</span>
+          <span class="price">12,00 €</span>
+        </div>
+        <div class="description">Ron blanco, limón, menta, azúcar, agua con gas, hielo</div>
+      </div>
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Daiquiri</span>
+          <span class="price">12,00 €</span>
+        </div>
+        <div class="description">Ron blanco, zumo de limón fresco, jarabe de azúcar, hielo</div>
+      </div>
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Piña Colada</span>
+          <span class="price">12,00 €</span>
+        </div>
+        <div class="description">Ron blanco, leche de coco, zumo de piña, hielo</div>
+      </div>
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Cóctel "La Goleta"</span>
+          <span class="price">10,00 €</span>
+        </div>
+        <div class="description">Vino tinto suave, leche condensada, hielo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección Destilados -->
+<div class="section-anchor" id="destilados"></div>
+<section>
+  <h2><i class="fas fa-wine-bottle me-2"></i>Destilados</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Ron</span>
+        </div>
+        <div class="description">Barceló, Bacardí — <strong>8,00 €</strong></div>
+        <div class="description"><em>Premium:</em> Havana Club 7 — <strong>10,00 €</strong></div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Gin</span>
+        </div>
+        <div class="description">Beefeater, Larios, Seagram's — <strong>8,00 €</strong></div>
+        <div class="description"><em>Premium:</em> Hendrick's, Tanqueray Ten, Bombay, Nordés — <strong>10,00 €</strong></div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Whisky</span>
+        </div>
+        <div class="description">Ballantine's, Red Label — <strong>8,00 €</strong></div>
+        <div class="description"><em>Premium:</em> Chivas Regal 12, Black Label — <strong>10,00 €</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección Copas -->
+<div class="section-anchor" id="copas"></div>
+<section>
+  <h2><i class="fas fa-glass-martini-alt me-2"></i>Copas</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Copas</span>
+          <span class="price">4,00 €</span>
+        </div>
+        <div class="description">Arroz/Orujo/Limoncelo/Baileys/Maria/Hierbas</div>
+      </div>
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Copa Macalan</span>
+          <span class="price">12,00 €</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Copas (Whysky/Ron/Coñac)</span>
+          <span class="price">2,60 €</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Aperol</span>
+          <span class="price">4,00 €</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Copa Gran Duque de Alba</span>
+          <span class="price">6,50 €</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección Chupitos -->
+<div class="section-anchor" id="chupitos"></div>
+<section>
+  <h2><i class="fas fa-glass-whiskey me-2"></i>Chupitos</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Chupitos</span>
+          <span class="price">2,50 €</span>
+        </div>
+        <div class="description">Whiskhy/Ron/Arroz/Hierbas/Pacharán/Limochelo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección Otros -->
+<div class="section-anchor" id="otros"></div>
+<section>
+  <h2><i class="fas fa-ellipsis-h me-2"></i>Otros</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Martini (Blanco / Rojo)</span>
+          <span class="price">3,50 €</span>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="d-flex justify-content-between">
+          <span class="item-name">Refrescos (Coca-Cola, Fanta, Sprite, Agua)</span>
+          <span class="price">2,60 €</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <footer>
+    <p>© 2025 La Goleta - El Grao de Castellón | 
+      <a href="https://lagoletacastellon.com" target="_blank" rel="noopener noreferrer">lagoletacastellon.com</a>
+    </p>
+  </footer>
+
+  <script>
+    // Scroll suave animado para enlaces
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetID = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetID);
+        if (targetSection) {
+          const offset = 70; // altura del header/nav para compensar
+          const topPos = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({
+            top: topPos,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Forzar scroll al top al cargar (evita que abra al final)
+    window.onload = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  </script>
+</body>
+</html>
